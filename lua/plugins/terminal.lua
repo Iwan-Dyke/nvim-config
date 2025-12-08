@@ -24,7 +24,7 @@ return {
         
         -- Amazon Q Terminal (Persistent Vertical Right)
         local q_terminal = Terminal:new({
-            cmd = "q chat",
+            cmd = "kiro-cli chat",
             direction = "vertical",
             size = function()
                 return 25  -- Fixed 25 columns
