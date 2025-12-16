@@ -2,6 +2,13 @@ return {
     'akinsho/toggleterm.nvim',
     version = "*",
     config = function()
+        -- Resolve AI terminal command from optional lua/agent.lua (git-ignored)
+        local ai_cmd = "codex"
+        local ok, agent = pcall(require, "agent")
+        if ok and type(agent) == "table" and agent.chat_cmd then
+            ai_cmd = agent.chat_cmd
+        end
+
         require('toggleterm').setup({
             open_mapping = false, -- Disable default mapping
             persist_mode = false, -- Don't persist terminal mode
@@ -24,7 +31,7 @@ return {
         
         -- Amazon Q Terminal (Persistent Vertical Right)
         local q_terminal = Terminal:new({
-            cmd = "kiro-cli chat",
+            cmd = ai_cmd,
             direction = "vertical",
             size = function()
                 return 25  -- Fixed 25 columns

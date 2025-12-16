@@ -1,0 +1,5 @@
+-- Set the CLI command used by the AI terminal toggle (<leader>tq)
+-- Copy this file to lua/agent.lua (ignored) and adjust per machine.
+return {
+    chat_cmd = "codex",
+}
