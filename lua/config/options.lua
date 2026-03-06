@@ -25,3 +25,7 @@ vim.opt.undofile = true
 vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.swapfile = false
+
+-- Force Unix line endings
+vim.opt.fileformat = "unix"
+vim.opt.fileformats = "unix,dos"
