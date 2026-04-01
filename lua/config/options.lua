@@ -4,7 +4,7 @@ vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.wrap = false
 vim.opt.breakindent = true
 vim.opt.tabstop = 4
@@ -29,3 +29,6 @@ vim.opt.swapfile = false
 -- Force Unix line endings
 vim.opt.fileformat = "unix"
 vim.opt.fileformats = "unix,dos"
+
+-- Colourscheme
+vim.cmd.colorscheme('matrix')
