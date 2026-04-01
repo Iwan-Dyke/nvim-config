@@ -2,43 +2,44 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-        -- Imperial theme colors
-        local imperial_theme = {
+        local p = _G.theme_palette
+
+        local theme = {
             normal = {
-                a = { fg = '#ffffff', bg = '#cc0000', gui = 'bold' },
-                b = { fg = '#ffffff', bg = '#333333' },
-                c = { fg = '#cccccc', bg = '#1a1a1a' }
+                a = { fg = p.white, bg = p.red, gui = 'bold' },
+                b = { fg = p.green, bg = p.bg },
+                c = { fg = p.grey, bg = p.bg }
             },
             insert = {
-                a = { fg = '#000000', bg = '#ff6600', gui = 'bold' },
-                b = { fg = '#ffffff', bg = '#333333' },
-                c = { fg = '#cccccc', bg = '#1a1a1a' }
+                a = { fg = p.black, bg = p.orange, gui = 'bold' },
+                b = { fg = p.green, bg = p.bg },
+                c = { fg = p.grey, bg = p.bg }
             },
             visual = {
-                a = { fg = '#000000', bg = '#ffffff', gui = 'bold' },
-                b = { fg = '#ffffff', bg = '#333333' },
-                c = { fg = '#cccccc', bg = '#1a1a1a' }
+                a = { fg = p.black, bg = p.white, gui = 'bold' },
+                b = { fg = p.green, bg = p.bg },
+                c = { fg = p.grey, bg = p.bg }
             },
             replace = {
-                a = { fg = '#ffffff', bg = '#cc0000', gui = 'bold' },
-                b = { fg = '#ffffff', bg = '#333333' },
-                c = { fg = '#cccccc', bg = '#1a1a1a' }
+                a = { fg = p.white, bg = p.red, gui = 'bold' },
+                b = { fg = p.green, bg = p.bg },
+                c = { fg = p.grey, bg = p.bg }
             },
             command = {
-                a = { fg = '#ffffff', bg = '#cc0000', gui = 'bold' },
-                b = { fg = '#ffffff', bg = '#333333' },
-                c = { fg = '#cccccc', bg = '#1a1a1a' }
+                a = { fg = p.white, bg = p.red, gui = 'bold' },
+                b = { fg = p.green, bg = p.bg },
+                c = { fg = p.grey, bg = p.bg }
             },
             inactive = {
-                a = { fg = '#666666', bg = '#1a1a1a' },
-                b = { fg = '#666666', bg = '#1a1a1a' },
-                c = { fg = '#666666', bg = '#1a1a1a' }
+                a = { fg = p.grey_dk, bg = p.bg },
+                b = { fg = p.grey_dk, bg = p.bg },
+                c = { fg = p.grey_dk, bg = p.bg }
             }
         }
 
         require('lualine').setup({
             options = {
-                theme = imperial_theme,
+                theme = theme,
                 component_separators = { left = '', right = '' },
                 section_separators = { left = '', right = '' },
                 globalstatus = true,
