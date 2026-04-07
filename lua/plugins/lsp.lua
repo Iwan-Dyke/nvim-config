@@ -19,6 +19,7 @@ return {
         { mason = 'bash-language-server', exe = 'bash-language-server' },
         { mason = 'gopls',                exe = 'gopls' },
         { mason = 'terraform-ls',         exe = 'terraform-ls' },
+        { mason = 'dockerfile-language-server', exe = 'docker-langserver' },
         { mason = 'delve',                exe = 'dlv' },
         { mason = 'stylua',               exe = 'stylua' },
         { mason = 'shfmt',                exe = 'shfmt' },

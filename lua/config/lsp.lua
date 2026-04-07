@@ -58,5 +58,11 @@ vim.lsp.config('terraformls', {
   filetypes = { 'terraform', 'terraform-vars' },
 })
 
+vim.lsp.config('dockerls', {
+  cmd = { 'docker-langserver', '--stdio' },
+  root_markers = { 'Dockerfile', '.git' },
+  filetypes = { 'dockerfile' },
+})
+
 -- Activate all configured servers
-vim.lsp.enable({ 'lua_ls', 'pyright', 'ruff', 'yamlls', 'bashls', 'gopls', 'terraformls' })
+vim.lsp.enable({ 'lua_ls', 'pyright', 'ruff', 'yamlls', 'bashls', 'gopls', 'terraformls', 'dockerls' })

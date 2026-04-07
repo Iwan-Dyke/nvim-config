@@ -30,14 +30,15 @@ install_packages() {
                 git curl unzip \
                 gopls lua-language-server bash-language-server \
                 pyright yaml-language-server ruff \
-                go nodejs
+                go nodejs npm
             ;;
         apt)
             sudo apt update
             sudo apt install -y \
                 gcc build-essential \
                 git curl unzip \
-                golang nodejs npm
+                golang nodejs npm \
+                python3-pip
             ;;
         brew)
             brew install \
@@ -50,6 +51,16 @@ install_packages() {
             echo "WARNING: Unknown package manager. Install dependencies manually."
             ;;
     esac
+}
+
+install_dockerfile_ls() {
+    if command -v docker-langserver &>/dev/null; then
+        echo ">>> dockerfile-language-server already installed, skipping."
+        return
+    fi
+    echo ">>> Installing dockerfile-language-server..."
+    sudo npm install -g dockerfile-language-server-nodejs
+    echo ">>> dockerfile-language-server installed."
 }
 
 install_terraform_ls() {
@@ -104,6 +115,7 @@ main() {
 
     install_packages "$pm"
     install_terraform_ls
+    install_dockerfile_ls
     setup_paths
     setup_agent
 
