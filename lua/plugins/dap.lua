@@ -33,8 +33,8 @@ return {
     dependencies = { 'mfussenegger/nvim-dap' },
     ft = 'python',
     config = function()
-      -- Uses mason-installed debugpy
-      local debugpy_path = vim.fn.stdpath('data') .. '/mason/packages/debugpy/venv/bin/python'
+      local mason_debugpy = vim.fn.stdpath('data') .. '/mason/packages/debugpy/venv/bin/python'
+      local debugpy_path = vim.uv.fs_stat(mason_debugpy) and mason_debugpy or 'python3'
       require('dap-python').setup(debugpy_path)
       require('dap-python').test_runner = 'pytest'
     end,

@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+# Setup script for nvim-config on a new machine.
+# Installs system dependencies that Mason cannot handle itself.
+# Run once after cloning the repo.
+
+set -e
+
+detect_pm() {
+    if command -v pacman &>/dev/null; then echo "pacman"
+    elif command -v apt &>/dev/null; then echo "apt"
+    elif command -v brew &>/dev/null; then echo "brew"
+    else echo "unknown"
+    fi
+}
+
+install_packages() {
+    local pm=$1
+    case $pm in
+        pacman)
+            # SteamOS: ensure filesystem is writable
+            if command -v steamos-readonly &>/dev/null; then
+                echo ">>> Disabling SteamOS read-only filesystem..."
+                sudo steamos-readonly disable
+                echo ">>> Initialising pacman keyring..."
+                sudo pacman-key --init
+                sudo pacman-key --populate archlinux
+            fi
+            sudo pacman -S --needed \
+                gcc glibc linux-api-headers \
+                git curl unzip \
+                gopls lua-language-server bash-language-server \
+                pyright yaml-language-server ruff \
+                go nodejs
+            ;;
+        apt)
+            sudo apt update
+            sudo apt install -y \
+                gcc build-essential \
+                git curl unzip \
+                golang nodejs npm
+            ;;
+        brew)
+            brew install \
+                gcc git curl \
+                go node \
+                gopls lua-language-server bash-language-server \
+                pyright yaml-language-server ruff
+            ;;
+        *)
+            echo "WARNING: Unknown package manager. Install dependencies manually."
+            ;;
+    esac
+}
+
+install_terraform_ls() {
+    if command -v terraform-ls &>/dev/null; then
+        echo ">>> terraform-ls already installed, skipping."
+        return
+    fi
+    echo ">>> Installing terraform-ls..."
+    local version="0.35.0"
+    local url="https://releases.hashicorp.com/terraform-ls/${version}/terraform-ls_${version}_linux_amd64.zip"
+    curl -sLO "$url"
+    unzip -q "terraform-ls_${version}_linux_amd64.zip"
+    sudo mv terraform-ls /usr/local/bin/
+    rm "terraform-ls_${version}_linux_amd64.zip"
+    echo ">>> terraform-ls installed."
+}
+
+setup_paths() {
+    local added=0
+    if ! grep -q 'go/bin' ~/.bashrc; then
+        echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bashrc
+        added=1
+    fi
+    if ! grep -q 'nvim/bin' ~/.bashrc; then
+        echo 'export PATH="$HOME/.config/nvim/bin:$PATH"' >> ~/.bashrc
+        added=1
+    fi
+    if [ $added -eq 1 ]; then
+        echo ">>> PATH entries added to ~/.bashrc. Run: source ~/.bashrc"
+    fi
+}
+
+setup_agent() {
+    local agent="$HOME/.config/nvim/lua/agent.lua"
+    if [ -f "$agent" ]; then
+        echo ">>> agent.lua already exists, skipping."
+        return
+    fi
+    echo ""
+    echo ">>> No agent.lua found. This file sets your AI CLI command (<leader>tq)."
+    echo "    Options: claude, codex, aider, etc."
+    read -rp "    Enter your AI CLI command (default: claude): " cmd
+    cmd=${cmd:-claude}
+    echo "return { chat_cmd = \"$cmd\" }" > "$agent"
+    echo ">>> Created agent.lua with cmd: $cmd"
+}
+
+main() {
+    local pm
+    pm=$(detect_pm)
+    echo ">>> Detected package manager: $pm"
+
+    install_packages "$pm"
+    install_terraform_ls
+    setup_paths
+    setup_agent
+
+    echo ""
+    echo ">>> Setup complete. Open nvim — Mason will install any remaining tools automatically."
+}
+
+main
