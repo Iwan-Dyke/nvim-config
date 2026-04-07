@@ -1,6 +1,11 @@
 return {
     'akinsho/toggleterm.nvim',
     version = "*",
+    keys = {
+        { '<C-t>', desc = 'Toggle popup terminal' },
+        { '<leader>tq', desc = 'Toggle Q terminal' },
+        { '<leader>th', desc = 'Toggle horizontal terminal' },
+    },
     config = function()
         local ai_cmd = "codex"
         local ok, agent = pcall(require, "agent")
@@ -51,25 +56,11 @@ return {
             end,
         })
 
-        function _popup_terminal_toggle()
-            popup_terminal:toggle()
-        end
+        vim.keymap.set('n', '<C-t>', function() popup_terminal:toggle() end, { desc = "Toggle popup terminal" })
+        vim.keymap.set('n', '<leader>tq', function() q_terminal:toggle() end, { desc = "Toggle Q terminal" })
+        vim.keymap.set('n', '<leader>th', function() horizontal_terminal:toggle() end, { desc = "Toggle horizontal terminal" })
 
-        function _q_terminal_toggle()
-            q_terminal:toggle()
-        end
-
-        function _horizontal_terminal_toggle()
-            horizontal_terminal:toggle()
-        end
-
-        -- Keymaps
-        vim.keymap.set('n', '<C-t>', _popup_terminal_toggle, { desc = "Toggle popup terminal" })
-        vim.keymap.set('n', '<leader>tq', _q_terminal_toggle, { desc = "Toggle Q terminal" })
-        vim.keymap.set('n', '<leader>th', _horizontal_terminal_toggle, { desc = "Toggle horizontal terminal" })
-
-        -- Terminal mode keymaps
-        vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:lua _popup_terminal_toggle()<CR>')
+        vim.keymap.set('t', '<C-t>', function() popup_terminal:toggle() end)
         vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
         vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h')
         vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l')

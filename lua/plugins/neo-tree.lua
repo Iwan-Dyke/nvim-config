@@ -6,9 +6,12 @@ return {
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
         },
+    keys = {
+        { '<leader>e', ':Neotree toggle<CR>', desc = 'Toggle Neo-tree', silent = true },
+    },
     config = function()
         require("neo-tree").setup({
-            close_if_last_window = false,
+            close_if_last_window = true,
             popup_border_style = "rounded",
             enable_git_status = true,
             enable_diagnostics = true,
@@ -20,7 +23,7 @@ return {
             },
             window = {
                 position = "left",
-                width = 25,
+                width = require("config.profile").is_deck() and 20 or 25,
             },
             filesystem = {
                 filtered_items = {
@@ -34,9 +37,5 @@ return {
                 use_libuv_file_watcher = true,
             },
         })
-
-        
-        -- Keymaps
-        vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
     end,
 }

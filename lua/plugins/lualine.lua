@@ -2,32 +2,32 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-        local p = _G.theme_palette
+        local p = _G.theme_palette or require('config.palette').get('matrix')
 
         local theme = {
             normal = {
                 a = { fg = p.white, bg = p.red, gui = 'bold' },
-                b = { fg = p.green, bg = p.bg },
+                b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
             insert = {
                 a = { fg = p.black, bg = p.orange, gui = 'bold' },
-                b = { fg = p.green, bg = p.bg },
+                b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
             visual = {
                 a = { fg = p.black, bg = p.white, gui = 'bold' },
-                b = { fg = p.green, bg = p.bg },
+                b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
             replace = {
                 a = { fg = p.white, bg = p.red, gui = 'bold' },
-                b = { fg = p.green, bg = p.bg },
+                b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
             command = {
                 a = { fg = p.white, bg = p.red, gui = 'bold' },
-                b = { fg = p.green, bg = p.bg },
+                b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
             inactive = {
@@ -36,6 +36,8 @@ return {
                 c = { fg = p.grey_dk, bg = p.bg }
             }
         }
+
+        local is_deck = require("config.profile").is_deck()
 
         require('lualine').setup({
             options = {
@@ -46,10 +48,10 @@ return {
             },
             sections = {
                 lualine_a = { 'mode' },
-                lualine_b = { 'branch', 'diff' },
+                lualine_b = is_deck and {} or { 'branch', 'diff' },
                 lualine_c = { 'filename' },
-                lualine_x = { 'diagnostics', 'encoding', 'fileformat', 'filetype' },
-                lualine_y = { 'progress' },
+                lualine_x = is_deck and { 'filetype' } or { 'diagnostics', 'encoding', 'fileformat', 'filetype' },
+                lualine_y = is_deck and {} or { 'progress' },
                 lualine_z = { 'location' }
             },
             inactive_sections = {
