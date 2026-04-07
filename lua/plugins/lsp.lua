@@ -16,9 +16,11 @@ return {
         'ruff',
         'yaml-language-server',
         'bash-language-server',
-        'sql-language-server',
         'gopls',
         'terraform-ls',
+        -- Debuggers
+        'debugpy',
+        'delve',
         -- Formatters
         'stylua',
         'shfmt',
