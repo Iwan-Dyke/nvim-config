@@ -1,28 +1,7 @@
 vim.cmd('highlight clear')
 vim.g.colors_name = 'imperial'
 
-local p = {
-  bg        = '#000000',
-  bg_light  = '#1a1a1a',
-  bg_subtle = '#1a0000',
-  bg_mid    = '#140000',
-  bg_dim    = '#0f0000',
-  green     = '#ffffff',
-  green_mid = '#cccccc',
-  green_dk  = '#aaaaaa',
-  green_dim = '#666666',
-  green_lt  = '#ff6600',
-  red       = '#cc0000',
-  red_bright = '#ff0000',
-  orange    = '#ff6600',
-  yellow    = '#ffff00',
-  white     = '#ffffff',
-  black     = '#000000',
-  grey      = '#cccccc',
-  grey_dk   = '#666666',
-  grey_bg   = '#333333',
-  bg_dark   = '#1a1a1a',
-}
+local p = require('config.palette').get('imperial')
 
 local hl = function(group, opts)
   vim.api.nvim_set_hl(0, group, opts)
@@ -30,8 +9,8 @@ end
 
 -- Core
 hl('Normal',      { fg = p.white, bg = p.bg })
-hl('Comment',     { fg = p.green_dim, italic = true })
-hl('LineNr',      { fg = p.green_dim })
+hl('Comment',     { fg = p.muted, italic = true })
+hl('LineNr',      { fg = p.muted })
 hl('CursorLine',  { bg = p.bg_light })
 hl('Visual',      { bg = p.bg_subtle })
 
@@ -39,29 +18,29 @@ hl('Visual',      { bg = p.bg_subtle })
 hl('Keyword',    { fg = p.red, bold = true })
 hl('Function',   { fg = p.white })
 hl('String',     { fg = p.grey })
-hl('Identifier', { fg = p.green_dk })
+hl('Identifier', { fg = p.primary_dk })
 hl('Type',       { fg = p.white })
 hl('Constant',   { fg = p.white })
-hl('Special',    { fg = p.orange })
+hl('Special',    { fg = p.accent })
 hl('Delimiter',  { fg = p.grey })
 
 -- Treesitter
 hl('@function',              { fg = p.white })
 hl('@function.call',         { fg = p.grey })
-hl('@function.builtin',      { fg = p.orange })
+hl('@function.builtin',      { fg = p.accent })
 hl('@method',                { fg = p.white })
 hl('@method.call',           { fg = p.grey })
 hl('@type',                  { fg = p.white })
-hl('@type.builtin',          { fg = p.orange })
+hl('@type.builtin',          { fg = p.accent })
 hl('@keyword',               { fg = p.red, bold = true })
 hl('@keyword.function',      { fg = p.red, bold = true })
 hl('@variable',              { fg = p.grey })
-hl('@variable.builtin',      { fg = p.orange })
+hl('@variable.builtin',      { fg = p.accent })
 hl('@constant',              { fg = p.white })
-hl('@constant.builtin',      { fg = p.orange })
+hl('@constant.builtin',      { fg = p.accent })
 hl('@punctuation.bracket',   { fg = p.white })
 hl('@punctuation.delimiter', { fg = p.grey })
-hl('@punctuation.special',   { fg = p.orange })
+hl('@punctuation.special',   { fg = p.accent })
 
 -- UI elements
 hl('FloatBorder',  { fg = p.red, bold = true })
@@ -74,10 +53,10 @@ hl('NeoTreeNormalNC',      { fg = p.white, bg = p.bg })
 hl('NeoTreeDirectoryName', { fg = p.white })
 hl('NeoTreeDirectoryIcon', { fg = p.red })
 hl('NeoTreeFileName',      { fg = p.grey })
-hl('NeoTreeFileIcon',      { fg = p.green_dim })
+hl('NeoTreeFileIcon',      { fg = p.muted })
 hl('NeoTreeGitModified',   { fg = p.red })
 hl('NeoTreeGitAdded',      { fg = p.white })
-hl('NeoTreeIndentMarker',  { fg = p.green_dim })
+hl('NeoTreeIndentMarker',  { fg = p.muted })
 
 -- Terminal
 hl('Terminal',       { fg = p.white, bg = p.bg_light })
@@ -91,7 +70,7 @@ hl('GitSignsDelete', { fg = p.red })
 -- Alpha dashboard
 hl('AlphaHeader',  { fg = p.white })
 hl('AlphaButtons', { fg = p.grey })
-hl('AlphaFooter',  { fg = p.orange })
+hl('AlphaFooter',  { fg = p.accent })
 
 -- Render-markdown
 hl('RenderMarkdownH1',         { fg = p.white, bold = true })
@@ -107,13 +86,19 @@ hl('RenderMarkdownH4Bg',       {})
 hl('RenderMarkdownH5Bg',       {})
 hl('RenderMarkdownH6Bg',       {})
 hl('RenderMarkdownCode',       { fg = p.grey, bg = p.bg_light })
-hl('RenderMarkdownCodeInline', { fg = p.orange, bg = p.bg_light })
+hl('RenderMarkdownCodeInline', { fg = p.accent, bg = p.bg_light })
 hl('RenderMarkdownBullet',     { fg = p.red })
-hl('RenderMarkdownQuote',      { fg = p.green_dim, italic = true })
+hl('RenderMarkdownQuote',      { fg = p.muted, italic = true })
 hl('RenderMarkdownDash',       { fg = p.red })
-hl('RenderMarkdownLink',       { fg = p.orange, underline = true })
+hl('RenderMarkdownLink',       { fg = p.accent, underline = true })
 hl('RenderMarkdownTableHead',  { fg = p.white, bold = true })
 hl('RenderMarkdownTableRow',   { fg = p.grey })
+
+-- DAP (debugger)
+hl('DapBreakpoint',        { fg = p.red })
+hl('DapStopped',           { fg = p.white, bg = p.bg_subtle })
+hl('DapBreakpointLine',    {})
+hl('DapStoppedLine',       { bg = p.bg_subtle })
 
 -- Shared palette for lualine/plugins
 _G.theme_palette = p
