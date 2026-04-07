@@ -8,6 +8,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Load Config Modules
+require("config.profile")
 require("config.options")
 require("config.keymaps")
 require("config.lsp")

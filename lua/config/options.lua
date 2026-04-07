@@ -30,5 +30,15 @@ vim.opt.swapfile = false
 vim.opt.fileformat = "unix"
 vim.opt.fileformats = "unix,dos"
 
+-- Deck profile overrides
+if require("config.profile").is_deck() then
+    vim.opt.scrolloff = 3
+    vim.opt.wrap = true
+    vim.opt.number = true
+    vim.opt.relativenumber = false
+    vim.opt.signcolumn = "no"
+    vim.opt.cursorline = false
+end
+
 -- Colourscheme
 vim.cmd.colorscheme('matrix')
