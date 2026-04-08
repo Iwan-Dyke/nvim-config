@@ -42,6 +42,12 @@ hl('@punctuation.bracket',   { fg = p.white })
 hl('@punctuation.delimiter', { fg = p.grey })
 hl('@punctuation.special',   { fg = p.accent })
 
+-- Completion menu
+hl('Pmenu',      { fg = p.primary_mid, bg = p.bg_light })
+hl('PmenuSel',   { fg = p.primary, bg = p.bg_subtle })
+hl('PmenuSbar',  { bg = p.bg_subtle })
+hl('PmenuThumb', { bg = p.primary_dk })
+
 -- UI elements
 hl('FloatBorder',  { fg = p.red, bold = true })
 hl('VertSplit',    { fg = p.red, bg = p.bg, bold = true })
