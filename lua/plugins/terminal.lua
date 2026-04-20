@@ -3,6 +3,7 @@ return {
     version = "*",
     keys = {
         { '<C-t>', desc = 'Toggle popup terminal' },
+        { '<leader>gg', desc = 'Toggle lazygit' },
         { '<leader>tq', desc = 'Toggle Q terminal' },
         { '<leader>th', desc = 'Toggle horizontal terminal' },
     },
@@ -56,7 +57,20 @@ return {
             end,
         })
 
+        local lazygit = Terminal:new({
+            cmd = "lazygit",
+            direction = "float",
+            float_opts = {
+                border = "double",
+                width = math.floor(vim.o.columns * 0.95),
+                height = math.floor(vim.o.lines * 0.95),
+            },
+            count = 4,
+            hidden = true,
+        })
+
         vim.keymap.set('n', '<C-t>', function() popup_terminal:toggle() end, { desc = "Toggle popup terminal" })
+        vim.keymap.set('n', '<leader>gg', function() lazygit:toggle() end, { desc = "Toggle lazygit" })
         vim.keymap.set('n', '<leader>tq', function() q_terminal:toggle() end, { desc = "Toggle Q terminal" })
         vim.keymap.set('n', '<leader>th', function() horizontal_terminal:toggle() end, { desc = "Toggle horizontal terminal" })
 
