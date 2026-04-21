@@ -14,4 +14,6 @@ require("config.keymaps")
 require("config.lsp")
 
 -- Setup Plugins
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+    defaults = { lazy = true },
+})
