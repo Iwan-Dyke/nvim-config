@@ -69,7 +69,13 @@ install_terraform_ls() {
         return
     fi
     echo ">>> Installing terraform-ls..."
-    local version="0.35.0"
+    local version
+    version=$(curl -s https://api.github.com/repos/hashicorp/terraform-ls/releases/latest | grep '"tag_name"' | sed 's/.*"v\(.*\)".*/\1/')
+    if [ -z "$version" ]; then
+        echo "ERROR: Could not fetch latest terraform-ls version."
+        return 1
+    fi
+    echo ">>> Resolved latest version: ${version}"
     local url="https://releases.hashicorp.com/terraform-ls/${version}/terraform-ls_${version}_linux_amd64.zip"
     curl -sLO "$url"
     unzip -q "terraform-ls_${version}_linux_amd64.zip"
