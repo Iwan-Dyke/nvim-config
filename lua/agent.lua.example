@@ -1,5 +1,6 @@
--- Set the CLI command used by the AI terminal toggle (<leader>tq)
--- Copy this file to lua/agent.lua (ignored) and adjust per machine.
+-- Copy to agent.lua and set your AI CLI commands.
+-- agent.lua is gitignored — machine-specific config.
 return {
-    chat_cmd = "codex",
+    claude_cmd = "claude",
+    kiro_cmd = "kiro-cli chat",
 }
