@@ -3,4 +3,5 @@
 return {
     claude_cmd = "claude",
     kiro_cmd = "kiro-cli chat",
+    codex_cmd = "codex",
 }

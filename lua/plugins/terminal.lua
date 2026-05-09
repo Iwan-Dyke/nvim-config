@@ -6,15 +6,18 @@ return {
         { '<leader>gg', desc = 'Toggle lazygit' },
         { '<leader>tc', desc = 'Toggle Claude terminal' },
         { '<leader>tk', desc = 'Toggle Kiro terminal' },
+        { '<leader>tx', desc = 'Toggle Codex terminal' },
         { '<leader>th', desc = 'Toggle horizontal terminal' },
     },
     config = function()
         local claude_cmd = "claude"
         local kiro_cmd = "kiro-cli chat"
+        local codex_cmd = "codex"
         local ok, agent = pcall(require, "agent")
         if ok and type(agent) == "table" then
             claude_cmd = agent.claude_cmd or claude_cmd
             kiro_cmd = agent.kiro_cmd or kiro_cmd
+            codex_cmd = agent.codex_cmd or codex_cmd
         end
 
         require('toggleterm').setup({
@@ -49,9 +52,12 @@ return {
 
         local claude_terminal = Terminal:new(vim.tbl_extend("force", ai_opts, { cmd = claude_cmd, count = 2 }))
         local kiro_terminal = Terminal:new(vim.tbl_extend("force", ai_opts, { cmd = kiro_cmd, count = 5 }))
+        local codex_terminal = Terminal:new(vim.tbl_extend("force", ai_opts, { cmd = codex_cmd, count = 6 }))
 
-        local function toggle_ai(target, other)
-            if other:is_open() then other:close() end
+        local function toggle_ai(target, others)
+            for _, other in ipairs(others) do
+                if other:is_open() then other:close() end
+            end
             target:toggle()
         end
 
@@ -80,8 +86,9 @@ return {
 
         vim.keymap.set('n', '<C-t>', function() popup_terminal:toggle() end, { desc = "Toggle popup terminal" })
         vim.keymap.set('n', '<leader>gg', function() lazygit:toggle() end, { desc = "Toggle lazygit" })
-        vim.keymap.set('n', '<leader>tc', function() toggle_ai(claude_terminal, kiro_terminal) end, { desc = "Toggle Claude terminal" })
-        vim.keymap.set('n', '<leader>tk', function() toggle_ai(kiro_terminal, claude_terminal) end, { desc = "Toggle Kiro terminal" })
+        vim.keymap.set('n', '<leader>tc', function() toggle_ai(claude_terminal, { kiro_terminal, codex_terminal }) end, { desc = "Toggle Claude terminal" })
+        vim.keymap.set('n', '<leader>tk', function() toggle_ai(kiro_terminal, { claude_terminal, codex_terminal }) end, { desc = "Toggle Kiro terminal" })
+        vim.keymap.set('n', '<leader>tx', function() toggle_ai(codex_terminal, { claude_terminal, kiro_terminal }) end, { desc = "Toggle Codex terminal" })
         vim.keymap.set('n', '<leader>th', function() horizontal_terminal:toggle() end, { desc = "Toggle horizontal terminal" })
 
         vim.keymap.set('t', '<C-t>', function() popup_terminal:toggle() end)
