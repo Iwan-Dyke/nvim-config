@@ -23,6 +23,7 @@ return {
         'stylua',
         'shfmt',
         'yamlfmt',
+        'sqls',
       },
     },
   },

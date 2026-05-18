@@ -1,14 +1,4 @@
-return {
-    'nvim-treesitter/nvim-treesitter',
-    event = { "BufReadPre", "BufNewFile" },
-    build = ':TSUpdate',
-    config = function()
-
-        require('nvim-treesitter.configs').setup({
-            ensure_installed = { 'lua', 'python', 'yaml', 'bash', 'sql', 'markdown', 'go', 'mermaid', 'terraform', 'hcl' },
-            highlight = { enable = true },
-            indent = { enable = true},
-            incremental_selection = { enable = false },
-        })
-    end,
-}
+-- Neovim 0.12 has built-in treesitter. No plugin needed.
+-- Parsers are installed via :TSInstall or vim.treesitter.install
+-- Highlight and indent are enabled by default.
+return {}

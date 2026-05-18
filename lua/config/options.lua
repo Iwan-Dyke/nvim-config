@@ -1,3 +1,6 @@
+-- Python provider (isolated venv for Molten/remote plugins)
+vim.g.python3_host_prog = vim.fn.expand("~/.virtualenvs/nvim/bin/python3")
+
 -- Basic Editor Settings
 vim.opt.number = true
 vim.opt.relativenumber = true

@@ -64,5 +64,11 @@ vim.lsp.config('dockerls', {
   filetypes = { 'dockerfile' },
 })
 
+vim.lsp.config('sqls', {
+  cmd = { 'sqls' },
+  root_markers = { '.git' },
+  filetypes = { 'sql' },
+})
+
 -- Activate all configured servers
-vim.lsp.enable({ 'lua_ls', 'pyright', 'ruff', 'yamlls', 'bashls', 'gopls', 'terraformls', 'dockerls' })
+vim.lsp.enable({ 'lua_ls', 'pyright', 'ruff', 'yamlls', 'bashls', 'gopls', 'terraformls', 'dockerls', 'sqls' })
