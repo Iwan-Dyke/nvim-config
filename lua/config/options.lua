@@ -65,4 +65,4 @@ if require("config.profile").is_deck() then
 end
 
 -- Colourscheme
-vim.cmd.colorscheme('matrix')
+vim.cmd.colorscheme('wayne-tech')

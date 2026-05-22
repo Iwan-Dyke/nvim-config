@@ -22,6 +22,31 @@ return {
         [[  ╚═╝╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝]],
         [[        The Emperor's will be done.                      ]],
       },
+      ['wayne-tech'] = {
+        [[                            ,.ood888888888888boo.,                ]],
+        [[                       .od888P^""            ""^Y888bo.          ]],
+        [[                   .od8P''   ..oood88888888booo.    ``Y8bo.      ]],
+        [[                .odP'"  .ood8888888888888888888888boo.  "`Ybo.   ]],
+        [[              .d8'   od8'd888888888f`8888't888888888b`8bo   `Yb. ]],
+        [[             d8'  od8^   8888888888[  `'  ]8888888888   ^8bo  `8b]],
+        [[           .8P  d88'     8888888888P      Y8888888888     `88b  Y8.]],
+        [[          d8' .d8'       `Y88888888'      `88888888P'       `8b. `8b]],
+        [[         .8P .88P            """"            """"            Y88. Y8.]],
+        [[         88  888                                              888  88]],
+        [[         88  888                                              888  88]],
+        [[         88  888.        ..                        ..        .888  88]],
+        [[         `8b `88b,     d8888b.od8bo.      .od8bo.d8888b     ,d88' d8']],
+        [[          Y8. `Y88.    8888888888888b    d8888888888888    .88P' .8P]],
+        [[           `8b  Y88b.  `88888888888888  88888888888888'  .d88P  d8']],
+        [[             Y8.  ^Y88bod8888888888888..8888888888888bod88P^  .8P]],
+        [[              `Y8.   ^Y888888888888888888888888888888P^   .8P']],
+        [[                `^Yb.,  `^^Y8888888888888888888P^^'  ,.dP^']],
+        [[                   `^Y8b..   ``^^^Y88888P^^^'    ..d8P^']],
+        [[                       `^Y888bo.,            ,.od888P^']],
+        [[                            "`^^Y888888888888P^^'"     ]],
+        [[                                                       ]],
+        [[                       W A Y N E   T E C H             ]],
+      },
     }
 
     local quotes = {
@@ -53,7 +78,28 @@ return {
         "\"Perhaps I can find new ways to motivate them.\" — Darth Vader",
         "\"We shall double our efforts.\" — Moff Jerjerrod",
       },
+      ['wayne-tech'] = {},
     }
+
+    -- Wayne-Tech: generate system info instead of quotes
+    local function wayne_tech_status()
+      local host = vim.fn.hostname()
+      local date = os.date("%Y-%m-%d %H:%M")
+      local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
+      local branch = vim.fn.system("git -C " .. vim.fn.getcwd() .. " branch --show-current 2>/dev/null"):gsub("\n", "")
+      local lines = {
+        "┌─── SYSTEM STATUS ───────────────────────┐",
+        "│  NODE: " .. host .. string.rep(" ", math.max(0, 33 - #host)) .. "│",
+        "│  TIME: " .. date .. string.rep(" ", math.max(0, 33 - #date)) .. "│",
+        "│  PATH: " .. cwd:sub(1, 33) .. string.rep(" ", math.max(0, 33 - #cwd:sub(1, 33))) .. "│",
+      }
+      if branch ~= "" then
+        table.insert(lines, "│  BRANCH: " .. branch:sub(1, 31) .. string.rep(" ", math.max(0, 31 - #branch:sub(1, 31))) .. "│")
+      end
+      table.insert(lines, "│  STATUS: ONLINE" .. string.rep(" ", 25) .. "│")
+      table.insert(lines, "└──────────────────────────────────────────┘")
+      return lines
+    end
 
     local function git_branch()
       local branch = vim.fn.system("git -C " .. vim.fn.getcwd() .. " branch --show-current 2>/dev/null"):gsub("\n", "")
@@ -88,11 +134,20 @@ return {
     local is_deck = require("config.profile").is_deck()
     local theme = vim.g.colors_name or "matrix"
     local theme_quotes = quotes[theme] or quotes.matrix
-    local random_quote = {
-      type = "text",
-      val = { theme_quotes[math.random(#theme_quotes)] },
-      opts = { hl = "AlphaHeader", position = "center" },
-    }
+    local random_quote
+    if theme == "wayne-tech" then
+      random_quote = {
+        type = "text",
+        val = wayne_tech_status(),
+        opts = { hl = "AlphaFooter", position = "center" },
+      }
+    else
+      random_quote = {
+        type = "text",
+        val = { theme_quotes[math.random(#theme_quotes)] },
+        opts = { hl = "AlphaHeader", position = "center" },
+      }
+    end
 
     if is_deck then
       dashboard.section.header.val = { "[ " .. theme .. " ]" }

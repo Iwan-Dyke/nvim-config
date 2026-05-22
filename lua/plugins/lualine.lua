@@ -7,12 +7,12 @@ return {
 
         local theme = {
             normal = {
-                a = { fg = p.white, bg = p.red, gui = 'bold' },
+                a = { fg = p.white, bg = p.mode_normal or p.red, gui = 'bold' },
                 b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
             insert = {
-                a = { fg = p.black, bg = p.orange, gui = 'bold' },
+                a = { fg = p.black, bg = p.mode_insert or p.orange, gui = 'bold' },
                 b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
@@ -22,12 +22,12 @@ return {
                 c = { fg = p.grey, bg = p.bg }
             },
             replace = {
-                a = { fg = p.white, bg = p.red, gui = 'bold' },
+                a = { fg = p.white, bg = p.mode_normal or p.red, gui = 'bold' },
                 b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
             command = {
-                a = { fg = p.white, bg = p.red, gui = 'bold' },
+                a = { fg = p.white, bg = p.mode_normal or p.red, gui = 'bold' },
                 b = { fg = p.primary, bg = p.bg },
                 c = { fg = p.grey, bg = p.bg }
             },
