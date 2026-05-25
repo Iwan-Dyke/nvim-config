@@ -4,24 +4,11 @@ return {
   lazy = false,
   build = ':UpdateRemotePlugins',
   keys = {
-    { '<leader>mi', '<cmd>MoltenInit<cr>', desc = 'Molten init kernel' },
+    { '<leader>mi', function() require('config.molten-spark').init() end, desc = 'Molten init kernel' },
+    { '<leader>mx', function() require('config.molten-spark').restart() end, desc = 'Molten reconnect' },
     { '<leader>mr', '<cmd>MoltenEvaluateLine<cr>', desc = 'Molten run line' },
     { '<leader>mr', ':<C-u>MoltenEvaluateVisual<cr>', mode = 'v', desc = 'Molten run selection' },
-    { '<leader>mc', function()
-      local ok, api = pcall(require, 'notebook.api')
-      if not ok then
-        vim.cmd('MoltenReevaluateCell')
-        return
-      end
-      local extmark = api.current_extmark()
-      if not extmark then
-        vim.notify('[Molten] Not inside a notebook cell', vim.log.levels.WARN)
-        return
-      end
-      local start_line = extmark[1] + 1
-      local end_line = extmark[3].end_row
-      vim.fn.MoltenEvaluateRange(start_line, end_line)
-    end, desc = 'Molten run cell' },
+    { '<leader>mc', function() require('config.molten-cells').run_cell() end, desc = 'Molten run cell' },
     { '<leader>md', '<cmd>MoltenDelete<cr>', desc = 'Molten delete output' },
     { '<leader>mo', '<cmd>MoltenShowOutput<cr>', desc = 'Molten show output' },
   },
