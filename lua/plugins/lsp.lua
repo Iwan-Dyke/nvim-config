@@ -19,6 +19,7 @@ return {
         'gopls',
         'terraform-ls',
         'dockerfile-language-server',
+        'debugpy',
         'delve',
         'stylua',
         'shfmt',

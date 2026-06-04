@@ -132,10 +132,10 @@ return {
     }
 
     local is_deck = require("config.profile").is_deck()
-    local theme = vim.g.colors_name or "matrix"
-    local theme_quotes = quotes[theme] or quotes.matrix
+    local cs_name = vim.g.colors_name or "matrix"
+    local theme_quotes = quotes[cs_name] or quotes.matrix
     local random_quote
-    if theme == "wayne-tech" then
+    if cs_name == "wayne-tech" then
       random_quote = {
         type = "text",
         val = wayne_tech_status(),
@@ -150,9 +150,9 @@ return {
     end
 
     if is_deck then
-      dashboard.section.header.val = { "[ " .. theme .. " ]" }
+      dashboard.section.header.val = { "[ " .. cs_name .. " ]" }
     else
-      dashboard.section.header.val = headers[theme] or headers.matrix
+      dashboard.section.header.val = headers[cs_name] or headers.matrix
     end
 
     local function footer_val()
