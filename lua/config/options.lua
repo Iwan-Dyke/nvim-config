@@ -19,6 +19,8 @@ vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 vim.opt.scrolloff = 8
 vim.opt.cursorline = true
+vim.opt.guicursor = "a:ver25-Cursor-blinkon1"
+vim.api.nvim_set_hl(0, 'Cursor', { bg = '#5b8fbd' })
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.clipboard = "unnamedplus"
@@ -65,4 +67,4 @@ if require("config.profile").is_deck() then
 end
 
 -- Colourscheme
-vim.cmd.colorscheme('wayne-tech')
+vim.cmd.colorscheme('matrix')

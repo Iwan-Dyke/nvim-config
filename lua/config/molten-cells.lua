@@ -29,4 +29,24 @@ function M.run_cell()
   end
 end
 
+function M.run_all()
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local cells = {}
+  local start = 0
+
+  for i, line in ipairs(lines) do
+    if line:match('^# %%%%') then
+      if i - 1 > start then
+        table.insert(cells, { start + 1, i - 1 })
+      end
+      start = i
+    end
+  end
+  table.insert(cells, { start + 1, #lines })
+
+  for _, cell in ipairs(cells) do
+    pcall(vim.fn.MoltenEvaluateRange, cell[1], cell[2])
+  end
+end
+
 return M

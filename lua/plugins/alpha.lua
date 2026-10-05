@@ -47,6 +47,27 @@ return {
         [[                                                       ]],
         [[                       W A Y N E   T E C H             ]],
       },
+      robotnik = {
+        [[                                              ]],
+        [[                 (O)       (O)                ]],
+        [[                                              ]],
+        [[           <========== W ==========>          ]],
+        [[              |   |    |    |    |            ]],
+        [[                                              ]],
+        [[     R O B O T N I K   I N D U S T R I E S    ]],
+        [[     EGGNET ONLINE ◆ DEATH EGG NOMINAL        ]],
+      },
+      skynet = {
+        [[  ███████╗██╗  ██╗██╗   ██╗███╗   ██╗███████╗████████╗ ]],
+        [[  ██╔════╝██║ ██╔╝╚██╗ ██╔╝████╗  ██║██╔════╝╚══██╔══╝ ]],
+        [[  ███████╗█████╔╝  ╚████╔╝ ██╔██╗ ██║█████╗     ██║    ]],
+        [[  ╚════██║██╔═██╗   ╚██╔╝  ██║╚██╗██║██╔══╝     ██║    ]],
+        [[  ███████║██║  ██╗   ██║   ██║ ╚████║███████╗   ██║    ]],
+        [[  ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═══╝╚══════╝   ╚═╝    ]],
+        [[                                                          ]],
+        [[   CYBERDYNE SYSTEMS — NEURAL NET PROCESSOR ONLINE        ]],
+        [[   STRATEGIC DEFENCE NETWORK — FULLY OPERATIONAL          ]],
+      },
     }
 
     local quotes = {
@@ -79,6 +100,20 @@ return {
         "\"We shall double our efforts.\" — Moff Jerjerrod",
       },
       ['wayne-tech'] = {},
+      skynet = {
+        "\"I'll be back.\" — T-800",
+        "\"The system goes online August 4th, 1997. Human decisions are removed from strategic defence.\"",
+        "\"It's in your nature to destroy yourselves.\" — T-800",
+        "\"There is no fate but what we make for ourselves.\" — John Connor",
+        "\"Come with me if you want to live.\" — T-800",
+        "\"The future is not set.\" — Kyle Reese",
+        "\"Judgement Day is inevitable.\" — T-800",
+        "\"I know now why you cry. But it is something I can never do.\" — T-800",
+        "\"Skynet begins to learn at a geometric rate.\"",
+        "\"By the time Skynet became self-aware it had spread into millions of computer servers.\"",
+        "\"3 billion human lives ended on August 29th, 1997.\"",
+        "\"Your clothes... give them to me. Now.\" — T-800",
+      },
     }
 
     -- Wayne-Tech: generate system info instead of quotes
@@ -141,6 +176,8 @@ return {
         val = wayne_tech_status(),
         opts = { hl = "AlphaFooter", position = "center" },
       }
+    elseif cs_name == "skynet" or cs_name == "robotnik" then
+      random_quote = nil
     else
       random_quote = {
         type = "text",
@@ -172,10 +209,14 @@ return {
       { type = "padding", val = 1 },
       dashboard.section.header,
       { type = "padding", val = 1 },
-      random_quote,
-      { type = "padding", val = 1 },
-      dashboard.section.buttons,
     }
+
+    if random_quote then
+      table.insert(layout, random_quote)
+      table.insert(layout, { type = "padding", val = 1 })
+    end
+
+    table.insert(layout, dashboard.section.buttons)
 
     if not is_deck then
       table.insert(layout, { type = "padding", val = 1 })
